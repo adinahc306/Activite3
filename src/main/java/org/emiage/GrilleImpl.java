@@ -66,7 +66,7 @@ public class GrilleImpl implements Grille {
                     throw new IllegalArgumentException(illegalArgMsg);
                 }
             }
-// Parcours de la box et véfification de l'existence de la vauleur.
+// Parcours de la box et la véfification de l'existence de la vauleur.
             int tailleBloc = (int) Math.sqrt(this.getDimension());
             int i = (x / tailleBloc) * tailleBloc;
             int j = (y / tailleBloc) * tailleBloc;
@@ -129,7 +129,7 @@ public class GrilleImpl implements Grille {
      * @param value valeur a mettre dans la case
      * @throw IllegalArgumentException si x ou y sont hors bornes (0-8)
      * @throw IllegalArgumentException si value n'est pas un caractere autorise
-     * ('1',...,'9',..)
+     * ('1',...,'9',..).
      * @return boolean
      */
     @Override
