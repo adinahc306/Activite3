@@ -128,7 +128,7 @@ public class GrilleImpl implements Grille {
      * @param y position y dans la grille
      * @param value valeur a mettre dans la case
      * @throw IllegalArgumentException si x ou y sont hors bornes (0-8)
-     * @throw IllegalArgumentException si value n'est pas un caractere autorise
+     * @throw IllegalArgumentException si value n'est pas un caractere autorise.
      * ('1',...,'9',..)
      * @return boolean
      */
