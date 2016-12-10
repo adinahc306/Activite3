@@ -1,0 +1,348 @@
+JAVA PROFILE 1.0.1, created Sat Dec 10 22:15:48 2016
+
+Copyright (c) 2003, 2005, Oracle and/or its affiliates. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+  - Neither the name of Oracle nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Header for -agentlib:hprof (or -Xrunhprof) ASCII Output (JDK 5.0 JVMTI based)
+
+WARNING!  This file format is under development, and is subject to
+change without notice.
+
+This file contains the following types of records:
+
+THREAD START
+THREAD END      mark the lifetime of Java threads
+
+TRACE           represents a Java stack trace.  Each trace consists
+                of a series of stack frames.  Other records refer to
+                TRACEs to identify (1) where object allocations have
+                taken place, (2) the frames in which GC roots were
+                found, and (3) frequently executed methods.
+
+HEAP DUMP       is a complete snapshot of all live objects in the Java
+                heap.  Following distinctions are made:
+
+                ROOT    root set as determined by GC
+                CLS     classes 
+                OBJ     instances
+                ARR     arrays
+
+SITES           is a sorted list of allocation sites.  This identifies
+                the most heavily allocated object types, and the TRACE
+                at which those allocations occurred.
+
+CPU SAMPLES     is a statistical profile of program execution.  The VM
+                periodically samples all running threads, and assigns
+                a quantum to active TRACEs in those threads.  Entries
+                in this record are TRACEs ranked by the percentage of
+                total quanta they consumed; top-ranked TRACEs are
+                typically hot spots in the program.
+
+CPU TIME        is a profile of program execution obtained by measuring
+                the time spent in individual methods (excluding the time
+                spent in callees), as well as by counting the number of
+                times each method is called. Entries in this record are
+                TRACEs ranked by the percentage of total CPU time. The
+                "count" field indicates the number of times each TRACE 
+                is invoked.
+
+MONITOR TIME    is a profile of monitor contention obtained by measuring
+                the time spent by a thread waiting to enter a monitor.
+                Entries in this record are TRACEs ranked by the percentage
+                of total monitor contention time and a brief description
+                of the monitor.  The "count" field indicates the number of 
+                times the monitor was contended at that TRACE.
+
+MONITOR DUMP    is a complete snapshot of all the monitors and threads in 
+                the System.
+
+HEAP DUMP, SITES, CPU SAMPLES|TIME and MONITOR DUMP|TIME records are generated 
+at program exit.  They can also be obtained during program execution by typing 
+Ctrl-\ (on Solaris) or by typing Ctrl-Break (on Win32).
+
+--------
+
+THREAD START (obj=50000175, id = 200002, name="HPROF gc_finish watcher", group="system")
+THREAD START (obj=50000175, id = 200001, name="main", group="main")
+THREAD END (id = 200001)
+THREAD START (obj=50000175, id = 200003, name="DestroyJavaVM", group="main")
+THREAD END (id = 200003)
+TRACE 302090:
+	java.io.BufferedInputStream.read(<Unknown Source>:Unknown line)
+	java.io.DataInputStream.readShort(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.load(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.access$000(<Unknown Source>:Unknown line)
+TRACE 302112:
+	java.util.HashMap.put(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.load(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.access$000(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile$1.run(<Unknown Source>:Unknown line)
+TRACE 300827:
+	java.lang.AbstractStringBuilder.append(<Unknown Source>:Unknown line)
+	java.lang.StringBuffer.append(<Unknown Source>:Unknown line)
+	java.io.WinNTFileSystem.normalize(<Unknown Source>:Unknown line)
+	java.io.WinNTFileSystem.normalize(<Unknown Source>:Unknown line)
+TRACE 300751:
+	java.lang.StringBuilder.append(<Unknown Source>:Unknown line)
+	sun.net.www.ParseUtil.decode(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath$3.run(<Unknown Source>:Unknown line)
+TRACE 302086:
+	java.io.DataInputStream.readUTF(<Unknown Source>:Unknown line)
+	java.io.DataInputStream.readUTF(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.load(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.access$000(<Unknown Source>:Unknown line)
+TRACE 302324:
+	java.util.zip.ZipFile.getZipEntry(<Unknown Source>:Unknown line)
+	java.util.zip.ZipFile.getEntry(<Unknown Source>:Unknown line)
+	java.util.jar.JarFile.getEntry(<Unknown Source>:Unknown line)
+	java.util.jar.JarFile.getJarEntry(<Unknown Source>:Unknown line)
+TRACE 302317:
+	java.util.Date.normalize(<Unknown Source>:Unknown line)
+	java.util.Date.getTimeImpl(<Unknown Source>:Unknown line)
+	java.util.Date.<init>(<Unknown Source>:Unknown line)
+	java.util.zip.ZipUtils.dosToJavaTime(<Unknown Source>:Unknown line)
+TRACE 302489:
+	java.lang.String.substring(<Unknown Source>:Unknown line)
+	sun.net.www.protocol.jar.Handler.parseURL(<Unknown Source>:Unknown line)
+	java.net.URL.<init>(<Unknown Source>:Unknown line)
+	java.net.URL.<init>(<Unknown Source>:Unknown line)
+TRACE 300750:
+	java.lang.AbstractStringBuilder.append(<Unknown Source>:Unknown line)
+	java.lang.StringBuilder.append(<Unknown Source>:Unknown line)
+	sun.net.www.ParseUtil.decode(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(<Unknown Source>:Unknown line)
+TRACE 302527:
+	java.lang.String.endsWith(<Unknown Source>:Unknown line)
+	sun.net.www.ParseUtil.canonizeString(<Unknown Source>:Unknown line)
+	sun.net.www.protocol.jar.Handler.parseURL(<Unknown Source>:Unknown line)
+	java.net.URL.<init>(<Unknown Source>:Unknown line)
+TRACE 302631:
+	java.util.jar.Attributes$Name.isValid(<Unknown Source>:Unknown line)
+	java.util.jar.Attributes$Name.<init>(<Unknown Source>:Unknown line)
+	java.util.jar.Attributes$Name.<clinit>(<Unknown Source>:Unknown line)
+	java.util.jar.Attributes.putValue(<Unknown Source>:Unknown line)
+TRACE 302091:
+	java.io.DataInputStream.readShort(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.load(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.access$000(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile$1.run(<Unknown Source>:Unknown line)
+TRACE 300824:
+	java.lang.String.charAt(<Unknown Source>:Unknown line)
+	java.io.WinNTFileSystem.normalize(<Unknown Source>:Unknown line)
+	java.io.WinNTFileSystem.normalize(<Unknown Source>:Unknown line)
+	java.io.File.<init>(<Unknown Source>:Unknown line)
+TRACE 300592:
+	java.lang.ThreadLocal$ThreadLocalMap.getEntry(<Unknown Source>:Unknown line)
+	java.lang.ThreadLocal$ThreadLocalMap.access$000(<Unknown Source>:Unknown line)
+	java.lang.ThreadLocal.get(<Unknown Source>:Unknown line)
+	sun.nio.cs.ThreadLocalCoders$Cache.forName(<Unknown Source>:Unknown line)
+TRACE 300740:
+	sun.nio.cs.ThreadLocalCoders$Cache.forName(<Unknown Source>:Unknown line)
+	sun.nio.cs.ThreadLocalCoders.decoderFor(<Unknown Source>:Unknown line)
+	sun.net.www.ParseUtil.decode(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(<Unknown Source>:Unknown line)
+TRACE 300178:
+	java.lang.invoke.LambdaForm$NamedFunction.<clinit>(<Unknown Source>:Unknown line)
+	java.lang.invoke.MethodHandle.<clinit>(<Unknown Source>:Unknown line)
+TRACE 302084:
+	java.util.Arrays.copyOfRange(<Unknown Source>:Unknown line)
+	java.lang.String.<init>(<Unknown Source>:Unknown line)
+	java.io.DataInputStream.readUTF(<Unknown Source>:Unknown line)
+	java.io.DataInputStream.readUTF(<Unknown Source>:Unknown line)
+TRACE 302077:
+	java.io.DataInputStream.readUnsignedShort(<Unknown Source>:Unknown line)
+	java.io.DataInputStream.readUTF(<Unknown Source>:Unknown line)
+	java.io.DataInputStream.readUTF(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.load(<Unknown Source>:Unknown line)
+TRACE 302076:
+	java.io.BufferedInputStream.read(<Unknown Source>:Unknown line)
+	java.io.DataInputStream.readUnsignedShort(<Unknown Source>:Unknown line)
+	java.io.DataInputStream.readUTF(<Unknown Source>:Unknown line)
+	java.io.DataInputStream.readUTF(<Unknown Source>:Unknown line)
+TRACE 301803:
+	java.io.WinNTFileSystem.normalize(<Unknown Source>:Unknown line)
+	java.io.WinNTFileSystem.normalize(<Unknown Source>:Unknown line)
+	java.io.File.<init>(<Unknown Source>:Unknown line)
+	java.util.jar.JarFile.<init>(<Unknown Source>:Unknown line)
+TRACE 301700:
+	sun.nio.cs.SingleByte$Encoder.encodeArrayLoop(<Unknown Source>:Unknown line)
+	sun.nio.cs.SingleByte$Encoder.encodeLoop(<Unknown Source>:Unknown line)
+	java.nio.charset.CharsetEncoder.encode(<Unknown Source>:Unknown line)
+	sun.nio.cs.StreamEncoder.implWrite(<Unknown Source>:Unknown line)
+TRACE 300872:
+	java.lang.String.indexOf(<Unknown Source>:Unknown line)
+	java.io.File.isInvalid(<Unknown Source>:Unknown line)
+	java.io.File.exists(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(<Unknown Source>:Unknown line)
+TRACE 301445:
+	java.security.Permissions.add(<Unknown Source>:Unknown line)
+	java.net.URLClassLoader.getPermissions(<Unknown Source>:Unknown line)
+	sun.misc.Launcher$AppClassLoader.getPermissions(<Unknown Source>:Unknown line)
+	java.security.SecureClassLoader.getProtectionDomain(<Unknown Source>:Unknown line)
+TRACE 301110:
+	java.lang.String.<init>(<Unknown Source>:Unknown line)
+	java.lang.String.concat(<Unknown Source>:Unknown line)
+	java.lang.Package.getSystemPackage(<Unknown Source>:Unknown line)
+	java.lang.ClassLoader.getPackage(<Unknown Source>:Unknown line)
+TRACE 301221:
+	sun.misc.PerfCounter.<init>(<Unknown Source>:Unknown line)
+	sun.misc.PerfCounter.newPerfCounter(<Unknown Source>:Unknown line)
+	sun.misc.PerfCounter$CoreCounters.<clinit>(<Unknown Source>:Unknown line)
+	sun.misc.PerfCounter.getReadClassBytesTime(<Unknown Source>:Unknown line)
+TRACE 300449:
+	java.lang.Character.toLowerCase(<Unknown Source>:Unknown line)
+	java.lang.Character.toLowerCase(<Unknown Source>:Unknown line)
+	java.lang.String.toLowerCase(<Unknown Source>:Unknown line)
+	java.lang.String.toLowerCase(<Unknown Source>:Unknown line)
+TRACE 301023:
+	java.net.URLStreamHandler.parseURL(<Unknown Source>:Unknown line)
+	sun.net.www.protocol.file.Handler.parseURL(<Unknown Source>:Unknown line)
+	java.net.URL.<init>(<Unknown Source>:Unknown line)
+	java.net.URL.<init>(<Unknown Source>:Unknown line)
+TRACE 301008:
+	java.lang.StringBuilder.toString(<Unknown Source>:Unknown line)
+	java.net.URLStreamHandler.parseURL(<Unknown Source>:Unknown line)
+	sun.net.www.protocol.file.Handler.parseURL(<Unknown Source>:Unknown line)
+	java.net.URL.<init>(<Unknown Source>:Unknown line)
+TRACE 300942:
+	java.io.WinNTFileSystem.normalize(<Unknown Source>:Unknown line)
+	java.io.WinNTFileSystem.normalize(<Unknown Source>:Unknown line)
+	java.io.File.<init>(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath$FileLoader.<init>(<Unknown Source>:Unknown line)
+TRACE 302926:
+	java.lang.Long$LongCache.<clinit>(<Unknown Source>:Unknown line)
+	java.lang.Long.valueOf(<Unknown Source>:Unknown line)
+	org.junit.Assert.assertEquals(Assert.java:Unknown line)
+	org.junit.Assert.assertEquals(Assert.java:Unknown line)
+TRACE 300849:
+	java.lang.Character.toLowerCase(<Unknown Source>:Unknown line)
+	java.lang.String.toLowerCase(<Unknown Source>:Unknown line)
+	java.io.WinNTFileSystem.hashCode(<Unknown Source>:Unknown line)
+	java.io.File.hashCode(<Unknown Source>:Unknown line)
+TRACE 300833:
+	java.io.WinNTFileSystem.normalize(<Unknown Source>:Unknown line)
+	java.io.WinNTFileSystem.normalize(<Unknown Source>:Unknown line)
+	java.io.File.<init>(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(<Unknown Source>:Unknown line)
+TRACE 302089:
+	java.io.BufferedInputStream.getBufIfOpen(<Unknown Source>:Unknown line)
+	java.io.BufferedInputStream.read(<Unknown Source>:Unknown line)
+	java.io.DataInputStream.readShort(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.load(<Unknown Source>:Unknown line)
+TRACE 300012:
+	java.security.AccessControlContext.optimize(<Unknown Source>:Unknown line)
+	java.security.AccessController.getContext(<Unknown Source>:Unknown line)
+	java.lang.Thread.init(<Unknown Source>:Unknown line)
+	java.lang.Thread.init(<Unknown Source>:Unknown line)
+TRACE 302133:
+	sun.util.calendar.ZoneInfoFile.load(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.access$000(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile$1.run(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.<clinit>(<Unknown Source>:Unknown line)
+TRACE 302142:
+	sun.util.calendar.ZoneInfoFile$1.run(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfoFile.<clinit>(<Unknown Source>:Unknown line)
+	sun.util.calendar.ZoneInfo.getTimeZone(<Unknown Source>:Unknown line)
+	java.util.TimeZone.getTimeZone(<Unknown Source>:Unknown line)
+TRACE 302252:
+	sun.util.calendar.BaseCalendar.isLeapYear(<Unknown Source>:Unknown line)
+	sun.util.calendar.BaseCalendar.getFixedDate(<Unknown Source>:Unknown line)
+	sun.util.calendar.BaseCalendar.getFixedDate(<Unknown Source>:Unknown line)
+	sun.util.calendar.AbstractCalendar.getTime(<Unknown Source>:Unknown line)
+TRACE 300714:
+	java.lang.Class.newInstance(<Unknown Source>:Unknown line)
+	sun.nio.cs.FastCharsetProvider.lookup(<Unknown Source>:Unknown line)
+	sun.nio.cs.FastCharsetProvider.charsetForName(<Unknown Source>:Unknown line)
+	java.nio.charset.Charset.lookup2(<Unknown Source>:Unknown line)
+TRACE 302820:
+	java.util.jar.JarFile.initializeVerifier(<Unknown Source>:Unknown line)
+	java.util.jar.JarFile.getInputStream(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath$JarLoader$2.getInputStream(<Unknown Source>:Unknown line)
+	sun.misc.Resource.cachedInputStream(<Unknown Source>:Unknown line)
+TRACE 300491:
+	sun.misc.URLClassPath$JarLoader.<clinit>(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath$3.run(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath$3.run(<Unknown Source>:Unknown line)
+	sun.misc.URLClassPath.getLoader(<Unknown Source>:Unknown line)
+TRACE 301321:
+	sun.net.www.protocol.file.Handler.createFileURLConnection(<Unknown Source>:Unknown line)
+	sun.net.www.protocol.file.Handler.openConnection(<Unknown Source>:Unknown line)
+	sun.net.www.protocol.file.Handler.openConnection(<Unknown Source>:Unknown line)
+	java.net.URL.openConnection(<Unknown Source>:Unknown line)
+TRACE 302987:
+	main.java.org.emiage.GrilleImpl.complete(GrilleImpl.java:Unknown line)
+	test.java.org.emiage.GrilleTest.testComplete(GrilleTest.java:Unknown line)
+	test.java.org.emiage.GrilleTest.main(GrilleTest.java:Unknown line)
+CPU TIME (ms) BEGIN (total = 749) Sat Dec 10 22:15:49 2016
+rank   self  accum   count trace method
+   1  6.28%  6.28%    3810 302090 java.io.BufferedInputStream.read
+   2  4.27% 10.55%     152 302112 java.util.HashMap.put
+   3  4.27% 14.82%    1213 300827 java.lang.AbstractStringBuilder.append
+   4  4.14% 18.96%     653 300751 java.lang.StringBuilder.append
+   5  4.14% 23.10%     588 302086 java.io.DataInputStream.readUTF
+   6  2.14% 25.23%       6 302324 java.util.zip.ZipFile.getZipEntry
+   7  2.14% 27.37%       6 302317 java.util.Date.normalize
+   8  2.14% 29.51%      12 302489 java.lang.String.substring
+   9  2.14% 31.64%     653 300750 java.lang.AbstractStringBuilder.append
+  10  2.14% 33.78%       8 302527 java.lang.String.endsWith
+  11  2.14% 35.91%      17 302631 java.util.jar.Attributes$Name.isValid
+  12  2.14% 38.05%    1905 302091 java.io.DataInputStream.readShort
+  13  2.14% 40.19%    1348 300824 java.lang.String.charAt
+  14  2.14% 42.32%      12 300592 java.lang.ThreadLocal$ThreadLocalMap.getEntry
+  15  2.14% 44.46%      12 300740 sun.nio.cs.ThreadLocalCoders$Cache.forName
+  16  2.14% 46.60%       1 300178 java.lang.invoke.LambdaForm$NamedFunction.<clinit>
+  17  2.14% 48.73%     588 302084 java.util.Arrays.copyOfRange
+  18  2.14% 50.87%     588 302077 java.io.DataInputStream.readUnsignedShort
+  19  2.14% 53.00%    1176 302076 java.io.BufferedInputStream.read
+  20  2.14% 55.14%       1 301803 java.io.WinNTFileSystem.normalize
+  21  2.14% 57.28%      10 301700 sun.nio.cs.SingleByte$Encoder.encodeArrayLoop
+  22  2.14% 59.41%      12 300872 java.lang.String.indexOf
+  23  2.14% 61.55%       2 301445 java.security.Permissions.add
+  24  2.14% 63.68%       8 301110 java.lang.String.<init>
+  25  2.14% 65.82%       6 301221 sun.misc.PerfCounter.<init>
+  26  2.14% 67.96%      95 300449 java.lang.Character.toLowerCase
+  27  2.00% 69.96%      14 301023 java.net.URLStreamHandler.parseURL
+  28  2.00% 71.96%      14 301008 java.lang.StringBuilder.toString
+  29  2.00% 73.97%       1 300942 java.io.WinNTFileSystem.normalize
+  30  2.00% 75.97%       1 302926 java.lang.Long$LongCache.<clinit>
+  31  2.00% 77.97%     725 300849 java.lang.Character.toLowerCase
+  32  2.00% 79.97%      13 300833 java.io.WinNTFileSystem.normalize
+  33  2.00% 81.98%    3810 302089 java.io.BufferedInputStream.getBufIfOpen
+  34  2.00% 83.98%       5 300012 java.security.AccessControlContext.optimize
+  35  2.00% 85.98%       1 302133 sun.util.calendar.ZoneInfoFile.load
+  36  2.00% 87.98%       1 302142 sun.util.calendar.ZoneInfoFile$1.run
+  37  2.00% 89.99%       6 302252 sun.util.calendar.BaseCalendar.isLeapYear
+  38  2.00% 91.99%       5 300714 java.lang.Class.newInstance
+  39  2.00% 93.99%       1 302820 java.util.jar.JarFile.initializeVerifier
+  40  2.00% 95.99%       1 300491 sun.misc.URLClassPath$JarLoader.<clinit>
+  41  2.00% 98.00%       2 301321 sun.net.www.protocol.file.Handler.createFileURLConnection
+  42  2.00% 100.00%       1 302987 main.java.org.emiage.GrilleImpl.complete
+CPU TIME (ms) END
