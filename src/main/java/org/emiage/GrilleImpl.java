@@ -2,7 +2,7 @@ package main.java.org.emiage;
 
 /**
  *
- * Implementation d'une grille.
+ * Implementation d'une grille de Sudoku.
  */
 public class GrilleImpl implements Grille {
 
@@ -54,19 +54,19 @@ public class GrilleImpl implements Grille {
         if (this.possible(x, y, value)) {
             String illegalArgMsg = "Valeur interdite aux vues des autres "
                     + "valeurs de la grille";
-// Parcours de la ligne x et véfification de l'existence de la vauleur.
+			// Parcours de la ligne x et véfification de l'existence de la vauleur.
             for (int i = 0; i < this.getDimension(); i++) {
                 if (this.grille[x][i] == value) {
                     throw new IllegalArgumentException(illegalArgMsg);
                 }
             }
-// Parcours de la colonne y et véfification de l'existence de la vauleur.
+			// Parcours de la colonne y et véfification de l'existence de la vauleur.
             for (int j = 0; j < this.getDimension(); j++) {
                 if (this.grille[j][y] == value) {
                     throw new IllegalArgumentException(illegalArgMsg);
                 }
             }
-// Parcours de la box et véfification de l'existence de la vauleur.
+			// Parcours de la box et véfification de l'existence de la vauleur.
             int tailleBloc = (int) Math.sqrt(this.getDimension());
             int i = (x / tailleBloc) * tailleBloc;
             int j = (y / tailleBloc) * tailleBloc;
@@ -92,7 +92,7 @@ public class GrilleImpl implements Grille {
      */
     @Override
     public final char getValue(final int x, final int y) {
-//      si x ou y sont hors bornes (0-8).
+		// si x ou y sont hors bornes (0-8).
         if (((x < 0) || (x >= this.getDimension()))
                 || ((y < 0) || (y >= this.getDimension()))) {
             throw new IllegalArgumentException("Ligne ou colonne hors borne");
@@ -107,8 +107,8 @@ public class GrilleImpl implements Grille {
      */
     @Override
     public final boolean complete() {
-//      Parcours des lignes et colonnes et vérification de l'existence
-//      ou non d'une veleur EMPTY c'est à dire vide.
+        // Parcours des lignes et colonnes et vérification de l'existence
+        // ou non d'une veleur EMPTY c'est à dire vide.
         boolean existe = true;
         for (int x = 0; x < this.getDimension(); x++) {
             for (int y = 0; y < this.getDimension(); y++) {
