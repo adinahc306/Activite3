@@ -66,7 +66,7 @@ public class GrilleImpl implements Grille {
                     throw new IllegalArgumentException(illegalArgMsg);
                 }
             }
-			// Parcours de la box et véfification de l'existence de la vauleur.
+			// Parcours de la box et la véfification de l'existence de la vauleur.
             int tailleBloc = (int) Math.sqrt(this.getDimension());
             int i = (x / tailleBloc) * tailleBloc;
             int j = (y / tailleBloc) * tailleBloc;
@@ -92,7 +92,7 @@ public class GrilleImpl implements Grille {
      */
     @Override
     public final char getValue(final int x, final int y) {
-		// si x ou y sont hors bornes (0-8).
+		//      si x ou y sont hors bornes (0-8).
         if (((x < 0) || (x >= this.getDimension()))
                 || ((y < 0) || (y >= this.getDimension()))) {
             throw new IllegalArgumentException("Ligne ou colonne hors borne");
@@ -107,8 +107,8 @@ public class GrilleImpl implements Grille {
      */
     @Override
     public final boolean complete() {
-        // Parcours des lignes et colonnes et vérification de l'existence
-        // ou non d'une veleur EMPTY c'est à dire vide.
+		//      Parcours des lignes et colonnes et vérification de l'existence
+		//      ou non d'une veleur EMPTY c'est à dire vide.
         boolean existe = true;
         for (int x = 0; x < this.getDimension(); x++) {
             for (int y = 0; y < this.getDimension(); y++) {
@@ -128,18 +128,18 @@ public class GrilleImpl implements Grille {
      * @param y position y dans la grille
      * @param value valeur a mettre dans la case
      * @throw IllegalArgumentException si x ou y sont hors bornes (0-8)
-     * @throw IllegalArgumentException si value n'est pas un caractere autorise.
-     * ('1',...,'9',..)
+     * @throw IllegalArgumentException si value n'est pas un caractere autorise
+     * ('1',...,'9',..).
      * @return boolean
      */
     @Override
     public final boolean possible(final int x, final int y, final char value) {
-//      si x ou y sont hors bornes
+		//      si x ou y sont hors bornes
         if ((x < 0 || x >= this.getDimension())
                 || (y < 0 || y >= this.getDimension())) {
             throw new IllegalArgumentException("Ligne ou colonne hors borne");
         }
-//       S'assurer que la valeur n'est pas interdite
+		//       S'assurer que la valeur n'est pas interdite
         for (int i = 0; i < this.getDimension(); i++) {
             if (Grille.possible[i] == value) {
                 return true;
