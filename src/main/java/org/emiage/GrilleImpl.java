@@ -54,19 +54,19 @@ public class GrilleImpl implements Grille {
         if (this.possible(x, y, value)) {
             String illegalArgMsg = "Valeur interdite aux vues des autres "
                     + "valeurs de la grille";
-// Parcours de la ligne x et véfification de l'existance de la vauleur.
+// Parcours de la ligne x et véfification de l'existence de la vauleur.
             for (int i = 0; i < this.getDimension(); i++) {
                 if (this.grille[x][i] == value) {
                     throw new IllegalArgumentException(illegalArgMsg);
                 }
             }
-// Parcours de la colonne y et véfification de l'existance de la vauleur.
+// Parcours de la colonne y et véfification de l'existence de la vauleur.
             for (int j = 0; j < this.getDimension(); j++) {
                 if (this.grille[j][y] == value) {
                     throw new IllegalArgumentException(illegalArgMsg);
                 }
             }
-// Parcours de la box et véfification de l'existance de la vauleur.
+// Parcours de la box et véfification de l'existence de la vauleur.
             int tailleBloc = (int) Math.sqrt(this.getDimension());
             int i = (x / tailleBloc) * tailleBloc;
             int j = (y / tailleBloc) * tailleBloc;
@@ -107,7 +107,7 @@ public class GrilleImpl implements Grille {
      */
     @Override
     public final boolean complete() {
-//      Parcours des lignes et colonnes et vérification de l'existance
+//      Parcours des lignes et colonnes et vérification de l'existence
 //      ou non d'une veleur EMPTY c'est à dire vide.
         boolean existe = true;
         for (int x = 0; x < this.getDimension(); x++) {
